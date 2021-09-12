@@ -44,4 +44,26 @@ execute VERIFY{
       else nu[i][j] == ln(sum k[i])*(exp(-lamda[i][j]*t)**k[i](1-exp(lamda[i][j])))**n[i]-k[i])
 }
 
-   
+execute VERIFY{
+   var i ;
+   for (i in Type = "S")
+      if p =k[i]
+         nu[i][j]== -lamda[i][j]*k[i]*t
+             /* implémenter le factoriel */
+      else nu[i][j] == -lamda[i][j]*k[i]*t
+}
+
+execute VERIFY{
+   var i ;
+   for (i in Type = "N")
+      if p =k[i] and nmax=k[i]
+         nu[i][j]== -lamda[i][j]*k[i]*t
+}
+
+/* Etape 3*/
+Maximize sum(i in 1..s,j in 1..m,p in k..m) nu[i][j]*y[i][j];
+   subject to {
+sum(i in 1..s) sum(j in 1..m) sum(p in K..m) alpha[i][j]*y[i][j]<=c[i][j];
+sum(i in 1..s) sum(j in 1..m) sum(p in K..m) beta[i][j]*y[i][j]<=w[i][j];
+}
+
